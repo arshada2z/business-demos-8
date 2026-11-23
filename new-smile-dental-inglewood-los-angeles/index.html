@@ -225,19 +225,181 @@ linear-gradient(135deg,#dbe9d5 0 30%,#e9eee6 30% 60%,#d6e6d0 60%)}
 @media (max-width:1060px){.stage{justify-content:flex-start}.phone:nth-child(2){margin-top:0}.feat{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.feat{grid-template-columns:1fr}.intro{padding-top:40px}.stage{gap:24px;padding-top:36px}}
 
-.fx3d{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.9;mix-blend-mode:var(--fxblend,normal)}
-.fx3d.fixed{position:fixed;z-index:0;opacity:.35}
-.hero{position:relative;isolation:isolate}.hero>.wrap,.hero>.hero-t{position:relative;z-index:2}
+body.gm{background:var(--g-bg);color:var(--g-ink);font-family:var(--body);min-height:100vh;position:relative}
+body.gm ::selection{background:var(--g-a);color:var(--g-aink)}
+/* ambient light for the glass to pick up */
+.amb{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:radial-gradient(1200px 700px at 12% -10%,var(--g-bg2),transparent 60%),var(--g-bg)}
+.amb i{position:absolute;border-radius:50%;filter:blur(80px);animation:gdrift 24s ease-in-out infinite alternate}
+.amb i:nth-child(1){width:46vw;height:46vw;left:-10vw;top:-12vw;background:var(--g-glow)}
+.amb i:nth-child(2){width:38vw;height:38vw;right:-8vw;top:28vh;background:var(--g-glow2);animation-delay:-9s}
+.amb i:nth-child(3){width:30vw;height:30vw;left:30vw;bottom:-14vw;background:var(--g-glow);opacity:.6;animation-delay:-15s}
+@keyframes gdrift{to{transform:translate3d(6vw,5vh,0) scale(1.18)}}
+.amb::after{content:"";position:absolute;inset:0;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.gm main,.gm header,.gm footer,.gm section,.gm .intro,.gm .stage{position:relative;z-index:1}
+.gw{max-width:1200px;margin:0 auto;padding:0 28px}
+/* the glass itself: tinted fill, double rim, top highlight, moving specular */
+.gl{position:relative;border-radius:var(--gr,24px);background:var(--g-fill);border:1px solid var(--g-rim);
+  box-shadow:inset 0 1px 0 var(--g-hi),inset 0 -1px 0 var(--g-rim2),var(--g-shadow);backdrop-filter:blur(20px) saturate(165%);-webkit-backdrop-filter:blur(20px) saturate(165%)}
+.gl::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(460px circle at var(--gx,24%) var(--gy,-10%),var(--g-spec),transparent 46%);opacity:.9}
+.gl::after{content:"";position:absolute;inset:5px;border-radius:calc(var(--gr,24px) - 5px);border:1px solid var(--g-rim2);pointer-events:none}
+.gl>*{position:relative;z-index:1}
+[data-gt]{transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.2,1);will-change:transform}
+.gk{display:inline-flex;align-items:center;gap:9px;font:600 12.5px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--g-a)}
+.gk::before{content:"";width:26px;height:1px;background:currentColor}
+.gh{font:600 clamp(32px,4.6vw,58px)/1.04 var(--display);letter-spacing:-.025em;margin:14px 0 14px;text-wrap:balance}
+.gh em{font-style:normal;background:linear-gradient(100deg,var(--g-a),var(--g-a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.gp{color:var(--g-muted);font-size:17.5px;max-width:560px;margin:0}
+.gsec{padding:clamp(72px,10vw,128px) 0}
+.gbtn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border-radius:999px;font-weight:650;font-size:15.5px;border:1px solid var(--g-rim);background:var(--g-fill);color:var(--g-ink);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:inset 0 1px 0 var(--g-hi);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.gbtn.pri{background:linear-gradient(120deg,var(--g-a),var(--g-a2));color:var(--g-aink);border-color:transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 18px 40px -16px var(--g-glow)}
+.gbtn:hover{transform:translateY(-2px)}
+/* nav */
+.gnav{position:sticky;top:44px;z-index:60;margin:14px auto 0;max-width:1200px;padding:0 20px}
+.gnav .gl{--gr:999px;display:flex;align-items:center;gap:18px;padding:10px 12px 10px 20px}
+.gnav .wm{font:650 17px var(--display);min-width:0}.gnav .wm-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--g-a),var(--g-a2));color:var(--g-aink);flex:none}
+.gnav nav{display:flex;gap:24px;margin-left:auto;font-size:14.5px;color:var(--g-muted);font-weight:550}
+.gnav nav a:hover{color:var(--g-ink)}
+.gnav .gbtn{padding:10px 18px;font-size:14px}
+/* hero */
+.ghero{padding:clamp(48px,7vw,96px) 0 clamp(60px,8vw,110px)}
+.ghero .grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(28px,5vw,70px);align-items:center}
+.ghero.center .grid{grid-template-columns:1fr;text-align:center;justify-items:center}
+.ghero h1{font:650 clamp(46px,8.2vw,112px)/.94 var(--display);letter-spacing:-.04em;margin:20px 0 22px}
+.ghero h1 .l2{display:block;overflow:hidden;padding-bottom:.08em}
+.ghero h1 .l2>span{display:inline-block;transform:translateY(108%);background:linear-gradient(100deg,var(--g-a),var(--g-a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.ghero h1.go .l2>span{transform:none;transition:transform 1s cubic-bezier(.2,.8,.2,1) .95s}
+.ghero .gp{font-size:19px}
+.ghero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.ghero.center .cta{justify-content:center}
+.ghero .rate{display:inline-flex;align-items:center;gap:10px;margin-top:26px;color:var(--g-muted);font-size:14.5px}
+.ghero .rate b{color:var(--g-ink);font-size:17px}
+.ghero .rate svg{color:#fbbf24}
+/* 09 masked type: outline first, then the photo rises through the letters behind a marker line */
+.mk{position:relative;display:inline-block;line-height:1}
+.mk-o{color:color-mix(in srgb,var(--g-ink) 13%,transparent);-webkit-text-stroke:1.2px color-mix(in srgb,var(--g-ink) 60%,transparent)}
+.mk-f{position:absolute;inset:0;color:transparent;background:linear-gradient(180deg,var(--mk-t1),var(--mk-t2)),var(--mk-img) center/cover;-webkit-background-clip:text;background-clip:text;clip-path:inset(var(--e,100%) 0 0 0);filter:var(--mk-fx)}
+.g-dark{--mk-t1:rgba(255,255,255,.5);--mk-t2:rgba(255,255,255,.16);--mk-fx:brightness(1.35) saturate(1.2)}
+.g-light{--mk-t1:rgba(10,14,30,.2);--mk-t2:rgba(10,14,30,.5);--mk-fx:saturate(1.15) contrast(1.08)}
+.mk-l{position:absolute;left:-2%;right:-2%;top:var(--e,100%);height:2px;background:var(--g-a);box-shadow:0 0 18px var(--g-a);opacity:var(--lo,0);pointer-events:none}
+.mk-l::after{content:"";position:absolute;right:-5px;top:-4px;width:10px;height:10px;background:var(--g-a);border-radius:2px}
+/* 12 image reveal: shutter slats */
+[data-shutter]{position:relative;overflow:hidden;border-radius:var(--gr,24px)}
+[data-shutter] img{width:100%;height:100%;object-fit:cover;display:block}
+.slat{position:absolute;top:0;bottom:0;background:var(--g-bg2);transform-origin:50% 50%;transition:transform .85s cubic-bezier(.65,0,.2,1);z-index:2;box-shadow:inset 1px 0 0 var(--g-rim),inset -1px 0 0 var(--g-rim2)}
+[data-shutter].open .slat{transform:scaleX(0)}
+.tagpill{position:absolute;left:16px;top:16px;z-index:3;padding:7px 13px;border-radius:999px;font:650 12.5px var(--body);background:var(--g-veil);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--g-rim);opacity:0;transform:translateY(8px);transition:.6s .9s}
+[data-shutter].open .tagpill{opacity:1;transform:none}
+/* 13 perspective shift: layers of one page pull apart toward one vanishing point */
+.lyw{position:relative;height:clamp(360px,44vw,520px);perspective:1500px;perspective-origin:82% 42%}
+.lys{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg))}
+.ly{position:absolute;inset:6% 10% 8% 2%;--gr:22px;overflow:hidden;transform:translate3d(calc(var(--i)*var(--sx,0px)),calc(var(--i)*var(--sy,0px)),calc(var(--i)*var(--sz,0px)));will-change:transform}
+.ly.p{padding:0}.ly.p img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.ly.t{padding:22px 24px;display:flex;flex-direction:column;gap:10px;justify-content:center}
+.ly .row{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--g-line);font-size:14.5px}
+.ly .row:last-child{border:0}.ly .row span{color:var(--g-muted)}
+.vp{position:absolute;right:16%;top:40%;width:7px;height:7px;border-radius:50%;background:var(--g-a);box-shadow:0 0 0 6px color-mix(in srgb,var(--g-a) 22%,transparent);opacity:0;transition:opacity .8s .9s}
+.lyw.go .vp{opacity:1}
+.vp::before,.vp::after{content:"";position:absolute;right:3px;top:3px;width:min(340px,26vw);height:1px;background:repeating-linear-gradient(90deg,color-mix(in srgb,var(--g-a) 55%,transparent) 0 6px,transparent 6px 12px);-webkit-mask-image:linear-gradient(90deg,transparent,#000 55%);mask-image:linear-gradient(90deg,transparent,#000 55%);transform-origin:100% 0;transform:rotate(9deg)}
+.vp::after{transform:rotate(-11deg)}
+/* 14 glass focus: only the row under the lens is sharp */
+.fo{position:relative;padding:14px}
+.fr{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:17px 18px;border-radius:14px;filter:blur(1.5px);opacity:.58;transform:scale(.985);transition:filter .5s,opacity .5s,transform .6s cubic-bezier(.2,.8,.2,1);cursor:pointer}
+.fr i{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:var(--g-fill2);border:1px solid var(--g-rim2);color:var(--g-a)}
+.fr b{display:block;font:650 18px var(--display)}.fr small{display:block;color:var(--g-muted);font-size:14px;margin-top:2px}
+.fr em{font-style:normal;font-weight:650;color:var(--g-a);font-size:13.5px;white-space:nowrap}
+.fr.on{filter:none;opacity:1;transform:scale(1.045);text-shadow:-.5px 0 color-mix(in srgb,var(--g-a2) 55%,transparent),.5px 0 color-mix(in srgb,var(--g-a) 55%,transparent)}
+.lens{position:absolute;left:6px;right:6px;top:0;height:0;border-radius:18px;pointer-events:none;z-index:0;border:1px solid var(--g-hi);
+  background:linear-gradient(180deg,var(--g-spec),transparent 38%),var(--g-fill2);box-shadow:inset 0 0 0 4px var(--g-rim2),inset 0 1px 0 var(--g-hi),0 22px 44px -22px rgba(0,0,0,.6),0 0 0 1px var(--g-rim2);
+  backdrop-filter:brightness(1.18) saturate(1.5);-webkit-backdrop-filter:brightness(1.18) saturate(1.5)}
+.fo .fr{position:relative;z-index:1}
+/* 07 spring stack */
+.stk{position:relative;height:clamp(400px,40vw,470px);perspective:1400px;margin-top:38px}
+.sc{position:absolute;left:50%;top:50%;width:min(320px,74vw);margin:-190px 0 0 calc(min(320px,74vw)/-2);height:380px;padding:26px;display:flex;flex-direction:column;cursor:pointer;will-change:transform}
+.sc i{display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--g-a),var(--g-a2));color:var(--g-aink);margin-bottom:auto}
+.sc h3{font:650 24px/1.12 var(--display);margin:18px 0 8px}.sc p{margin:0;color:var(--g-muted);font-size:15px}
+.sc .n{position:absolute;right:22px;top:20px;font:650 13px var(--body);color:var(--g-faint);letter-spacing:.1em}
+.ghost{position:absolute;left:50%;top:50%;width:min(320px,74vw);height:380px;margin:-190px 0 0 calc(min(320px,74vw)/-2);border-radius:24px;border:1.5px dashed color-mix(in srgb,var(--g-a) 55%,transparent);opacity:0;transition:opacity .6s;pointer-events:none}
+.stk.go .ghost{opacity:.7}
+/* 15 flowing paths */
+.flow{position:relative;display:grid;grid-template-columns:repeat(var(--n),1fr);gap:clamp(16px,3vw,40px);margin-top:48px}
+.flow svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
+.flow path.base{fill:none;stroke:var(--g-line);stroke-width:2}
+.flow path.lit{fill:none;stroke:url(#fg);stroke-width:2.5;stroke-linecap:round}
+.fn{position:relative;z-index:1;padding:24px 22px;--gr:20px;transition:box-shadow .6s,border-color .6s}
+.fn .d{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--g-rim);font:650 15px var(--body);color:var(--g-muted);margin-bottom:16px;position:relative;transition:.5s}
+.fn h3{font:650 20px var(--display);margin:0 0 6px}.fn p{margin:0;color:var(--g-muted);font-size:14.5px}
+.fn.lit{border-color:color-mix(in srgb,var(--g-a) 60%,var(--g-rim))}
+.fn.lit .d{background:linear-gradient(135deg,var(--g-a),var(--g-a2));color:var(--g-aink);border-color:transparent;box-shadow:0 0 26px var(--g-glow)}
+.fn .d::after{content:"";position:absolute;inset:-1px;border-radius:50%;border:1.5px solid var(--g-a);opacity:0}
+.fn.ping .d::after{animation:gring .9s ease-out}
+@keyframes gring{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(2.3)}}
+/* 08 magnetic dock */
+.dock{display:flex;justify-content:center;align-items:flex-end;gap:12px;padding:16px 20px;--gr:28px;width:max-content;max-width:100%;margin:0 auto;height:112px}
+.dk{display:grid;place-items:center;width:62px;height:62px;border-radius:18px;background:var(--g-fill2);border:1px solid var(--g-rim);color:var(--g-ink);transform-origin:50% 100%;transition:transform .18s cubic-bezier(.2,.8,.2,1);position:relative;flex:none}
+.dk span{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(6px);white-space:nowrap;font:600 12.5px var(--body);padding:5px 10px;border-radius:8px;background:var(--g-veil);border:1px solid var(--g-rim);backdrop-filter:blur(8px);opacity:0;transition:.25s;pointer-events:none}
+.dk:hover span{opacity:1;transform:translateX(-50%)}
+/* misc sections */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:center}
+.gal{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px;margin-top:44px}
+.gal>div{height:clamp(220px,26vw,340px)}.gal>div:first-child{grid-row:span 2;height:auto}
+.band{padding:clamp(40px,6vw,76px);display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center;--gr:34px;overflow:hidden}
+.band h2{font:650 clamp(30px,4.4vw,56px)/1.02 var(--display);letter-spacing:-.03em;margin:0 0 10px}
+.band .big{position:absolute;right:-40px;bottom:-70px;color:var(--g-a);opacity:.12;z-index:0}
+.ct{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;margin-top:40px}
+.ct .info{padding:30px;display:flex;flex-direction:column;gap:6px}
+.ct .it{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--g-line)}.ct .it:last-of-type{border:0}
+.ct .it i{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--g-fill2);border:1px solid var(--g-rim2);color:var(--g-a);flex:none}
+.ct .it small{display:block;color:var(--g-faint);font-size:12.5px;text-transform:uppercase;letter-spacing:.1em}
+.ct .map{overflow:hidden;min-height:340px;padding:8px}.ct .map iframe{width:100%;height:100%;min-height:324px;border:0;border-radius:18px;filter:saturate(.9)}
+.faq details{padding:20px 24px;--gr:18px;margin-bottom:10px}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;font:650 18px var(--display)}
+.faq summary::-webkit-details-marker{display:none}.faq summary span{transition:transform .35s;color:var(--g-a)}
+.faq details[open] summary span{transform:rotate(45deg)}.faq p{margin:10px 0 0;color:var(--g-muted)}
+.gft{padding:40px 0 110px;color:var(--g-faint);font-size:14px;border-top:1px solid var(--g-line);margin-top:40px}
+.gft .in{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.gft .wm{font:650 18px var(--display);color:var(--g-ink)}
+.mcall{position:fixed;left:16px;right:16px;bottom:16px;z-index:90;display:none;justify-content:center;align-items:center;gap:10px;padding:16px;border-radius:999px;background:linear-gradient(120deg,var(--g-a),var(--g-a2));color:var(--g-aink);font-weight:700;box-shadow:0 20px 40px -14px var(--g-glow)}
+/* staggered spring-in */
+[data-in]>*{opacity:0;transform:translateY(26px) scale(.98)}
+[data-in].go>*{opacity:1;transform:none;transition:opacity .7s,transform .9s cubic-bezier(.2,1.25,.3,1);transition-delay:calc(var(--k,0)*90ms)}
+@media (max-width:900px){
+  .gnav nav{display:none}.gnav .gbtn{margin-left:auto;flex:none}.gnav .gbtn span{display:none}.gnav .gbtn::after{content:"Call"}
+  .ghero .grid,.split,.ct,.band{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr}.gal{grid-template-columns:1fr 1fr}.gal>div:first-child{grid-column:span 2;grid-row:auto;height:240px}
+  .stk{height:auto;perspective:none;display:grid;gap:14px}.sc{position:relative;left:auto;top:auto;margin:0;width:100%;height:auto;min-height:0;transform:none!important}.sc i{margin-bottom:16px}.ghost{display:none}
+  .lyw{height:420px}.ly{inset:4% 6% 6% 0}
+  .dock{height:auto;flex-wrap:wrap;width:auto}.dk{transform:none!important}
+  .mcall{display:flex}
+  .gnav{top:52px}
+}
+@media (prefers-reduced-motion:reduce){.amb i{animation:none}.fr{filter:none;opacity:1}[data-in]>*{opacity:1;transform:none}.ghero h1 .l2>span{transform:none}.slat{display:none}.mk-f{clip-path:none}}
+
+body.gm .intro{padding:clamp(40px,6vw,76px) 20px 0;max-width:980px}
+body.gm .intro h1{font:650 clamp(40px,6.6vw,88px)/.98 var(--display);letter-spacing:-.035em;margin:22px 0 16px;color:var(--g-ink)}
+body.gm .intro h1 .l2{display:block;overflow:hidden;padding-bottom:.08em}
+body.gm .intro h1 .l2>span{display:inline-block;transform:translateY(108%);background:linear-gradient(100deg,var(--g-a),var(--g-a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+body.gm .intro h1.go .l2>span{transform:none;transition:transform 1s cubic-bezier(.2,.8,.2,1) .95s}
+body.gm .intro p{color:var(--g-muted);font-size:18.5px}
+body.gm .intro .chip0{background:var(--g-fill);border:1px solid var(--g-rim);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:var(--g-ink);box-shadow:inset 0 1px 0 var(--g-hi)}
+body.gm .intro .chip0 .wm-mark{background:linear-gradient(135deg,var(--g-a),var(--g-a2));color:var(--g-aink)}
+body.gm .stores>span{background:var(--g-fill);border:1px solid var(--g-rim);color:var(--g-ink);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:inset 0 1px 0 var(--g-hi)}
+body.gm .stores span span{background:none;border:0;box-shadow:none;padding:0;border-radius:0}
+body.gm .stage{position:relative;z-index:1}
+body.gm .stage::before{content:"";position:absolute;left:50%;bottom:10px;width:min(1100px,92vw);height:150px;transform:translateX(-50%) rotateX(74deg);border-radius:50%;background:radial-gradient(closest-side,var(--g-glow),transparent 72%);filter:blur(10px);pointer-events:none}
+body.gm .phone{box-shadow:0 70px 110px -44px rgba(0,0,0,.7),0 0 0 2px #2c2c30 inset,0 0 0 1px rgba(255,255,255,.1),0 0 60px -20px var(--g-glow)}
+.gpx{display:flex;align-items:baseline;gap:14px}.gpx b{font:650 clamp(54px,7vw,92px)/1 var(--display);letter-spacing:-.045em;background:linear-gradient(100deg,var(--g-a),var(--g-a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.gpx small{color:var(--g-muted);font-size:14px;line-height:1.35}
 
 @media (max-width:640px){.wrap{padding:0 18px}}
 </style>
 </head>
-<body class="f-clean">
+<body class="f-clean gm g-dark" style="--g-bg:hsl(201 28% 5.5%);--g-bg2:hsl(214 36% 10%);--g-ink:hsl(193 30% 96%);--g-muted:hsl(193 16% 72%);--g-faint:hsl(193 14% 52%);--g-fill:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.035));--g-fill2:rgba(255,255,255,.07);--g-rim:rgba(255,255,255,.2);--g-rim2:rgba(255,255,255,.07);--g-hi:rgba(255,255,255,.34);--g-spec:rgba(255,255,255,.2);--g-shadow:0 40px 80px -36px rgba(0,0,0,.75);--g-line:rgba(255,255,255,.1);--g-veil:rgba(4,6,14,.55);--g-a:hsl(193 82% 62%);--g-a2:hsl(235 90% 66%);--g-aink:hsl(193 40% 8%);--g-glow:hsl(193 82% 55% / 0.44);--g-glow2:hsl(235 82% 58% / 0.32)">
 <div class="demo-bar" role="note"><span>Demo concept · not affiliated with New Smile Dental</span><strong>Fully functional mobile app is available for $1,500</strong></div>
-<div class="intro">
+<div class="amb" aria-hidden="true"><i></i><i></i><i></i></div><div class="intro">
   <span class="chip0 fade-in" style="--d:.05s"><span class="wm-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5.5c-1.5-1.5-3.5-2.5-5.5-1.8C3.6 4.7 3.5 8 4.3 10.6c.6 2 .9 4.1 1.2 6.2.3 2 .8 4.2 2 4.2 1.5 0 1.6-3 2.2-5 .3-1 1.2-1.3 2.3-1.3s2 .3 2.3 1.3c.6 2 .7 5 2.2 5 1.2 0 1.7-2.2 2-4.2.3-2.1.6-4.2 1.2-6.2.8-2.6.7-5.9-2.2-6.9-2-.7-4 .3-5.5 1.8z"/></svg></span>New Smile Dental</span>
-  <h1 class="fade-in" style="--d:.15s">Your business, in your customers' pocket</h1>
-  <p class="fade-in" style="--d:.3s">A custom iOS &amp; Android app for New Smile Dental — designed to work alongside newsmiledental.com.</p>
+  <h1><span class="mk" style="--mk-img:url('photo.jpg')"><span class="mk-o">Open all hours,</span><span class="mk-f" aria-hidden="true">Open all hours,</span><span class="mk-l" aria-hidden="true"></span></span><span class="l2"><span>on their phone.</span></span></h1>
+  <p class="fade-in" style="--d:.3s">A custom iPhone and Android app for New Smile Dental, designed to work alongside newsmiledental.com.</p>
   <div class="stores fade-in" style="--d:.45s"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/><path d="M19 3v4M17 5h4"/></svg><span>Download on the<b>App Store</b></span></span><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg><span>Get it on<b>Google Play</b></span></span></div>
 </div>
 <div class="stage carousel">
@@ -246,30 +408,29 @@ linear-gradient(135deg,#dbe9d5 0 30%,#e9eee6 30% 60%,#d6e6d0 60%)}
        <div class="pop" style="--d:1.2s"><div class="qa"><span><i><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></i>Call</span><span><i><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></i>Directions</span><span><i><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></i>Book</span></div></div>
        <div class="pop" style="--d:1.35s"><div class="hd"><b>Popular services</b><small>See all</small></div><div class="li"><i><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5.5c-1.5-1.5-3.5-2.5-5.5-1.8C3.6 4.7 3.5 8 4.3 10.6c.6 2 .9 4.1 1.2 6.2.3 2 .8 4.2 2 4.2 1.5 0 1.6-3 2.2-5 .3-1 1.2-1.3 2.3-1.3s2 .3 2.3 1.3c.6 2 .7 5 2.2 5 1.2 0 1.7-2.2 2-4.2.3-2.1.6-4.2 1.2-6.2.8-2.6.7-5.9-2.2-6.9-2-.7-4 .3-5.5 1.8z"/></svg></i><div><b>Check-ups &amp; Cleaning</b><small>Preventive care for the whole family.</small></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></div><div class="li"><i><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/><path d="M19 3v4M17 5h4"/></svg></i><div><b>Teeth Whitening</b><small>A brighter smile, safely.</small></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></div></div></div><nav class="tb"><span class="on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><em>Home</em></span><span class=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><em>Book</em></span><span class=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg><em>Rewards</em></span><span class=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/></svg><em>Profile</em></span></nav></div></div><div class="phone" style="--d:0.57s"><div class="scr " style="--pd:0.22s"><div class="sb"><b>9:41</b><span class="sig"><i></i><i></i><i></i><i></i></span></div><div class="bd"><div class="bk"><span class="bb"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span><div><b>Book a visit</b><small>Make time for your smile.</small></div></div>
        <div class="pop" style="--d:0.9s"><div class="hd"><b>Choose a service</b></div><div class="tiles"><span class="on"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Check-ups Cleaning</span><span class=""><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/><path d="M19 3v4M17 5h4"/></svg> Teeth Whitening</span><span class=""><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg> Implants</span><span class=""><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3C14.7 3 13.5 3.5 12 5c-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"/></svg> Invisalign</span></div></div>
-       <div class="pop" style="--d:1.05s"><div class="hd"><b>Choose a day</b><small>November 2026</small></div><div class="days"><span class="">Tue<b>10</b></span><span class="on">Wed<b>11</b></span><span class="">Thu<b>12</b></span><span class="">Fri<b>13</b></span><span class="">Sat<b>14</b></span><span class="">Sun<b>15</b></span></div></div>
+       <div class="pop" style="--d:1.05s"><div class="hd"><b>Choose a day</b><small>November 2026</small></div><div class="days"><span class="">Tue<b>24</b></span><span class="on">Wed<b>25</b></span><span class="">Thu<b>26</b></span><span class="">Fri<b>27</b></span><span class="">Sat<b>28</b></span><span class="">Sun<b>29</b></span></div></div>
        <div class="pop" style="--d:1.2s"><div class="hd"><b>Available times</b></div><div class="tms" style="grid-template-columns:repeat(3,1fr)"><span class="">9:00 AM</span><span class="off">10:30 AM</span><span class="">11:00 AM</span><span class="on">1:30 PM <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="">3:00 PM</span><span class="">4:30 PM</span></div></div>
-       <div class="pop" style="--d:1.35s"><div class="sum"><i><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></i><div><small>Your appointment</small><b>Check-ups &amp; Cleaning</b><em>Wed, Nov 11 · 1:30 PM</em></div></div></div><div class="pop" style="--d:1.5s"><div class="big shine">Confirm booking <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div><nav class="tb"><span class=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><em>Home</em></span><span class="on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><em>Book</em></span><span class=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg><em>Rewards</em></span><span class=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/></svg><em>Profile</em></span></nav></div></div><div class="phone" style="--d:0.79s"><div class="scr " style="--pd:0.44s"><div class="sb"><b>9:41</b><span class="sig"><i></i><i></i><i></i><i></i></span></div><div class="bd"><h2 class="ttl sm">Your rewards</h2><p class="hi">A little thank you for every visit.</p>
+       <div class="pop" style="--d:1.35s"><div class="sum"><i><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></i><div><small>Your appointment</small><b>Check-ups &amp; Cleaning</b><em>Wed, Nov 25 · 1:30 PM</em></div></div></div><div class="pop" style="--d:1.5s"><div class="big shine">Confirm booking <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div><nav class="tb"><span class=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><em>Home</em></span><span class="on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><em>Book</em></span><span class=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg><em>Rewards</em></span><span class=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/></svg><em>Profile</em></span></nav></div></div><div class="phone" style="--d:0.79s"><div class="scr " style="--pd:0.44s"><div class="sb"><b>9:41</b><span class="sig"><i></i><i></i><i></i><i></i></span></div><div class="bd"><h2 class="ttl sm">Your rewards</h2><p class="hi">A little thank you for every visit.</p>
        <div class="pop" style="--d:0.9s"><div class="club g"><small>New Smile Dental club</small><b>3 of 5 visits</b><em>Just 2 more visits to your reward.</em><div class="stamps "><span class="on" style="--d:1.40s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="on" style="--d:1.58s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="on" style="--d:1.76s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><span class="" style="--d:1.94s"></span><span class="" style="--d:2.12s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg></span></div></div></div>
        <div class="pop" style="--d:1.1s"><div class="hd"><b>Find us</b></div><div class="map"><div class="pin"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg><span>New Smile Dental</span></div></div></div>
        <div class="pop" style="--d:1.25s"><div class="row"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg> 405 S La Brea Ave, Inglewood</div><div class="row"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg> (310) 674-5555</div></div>
        <div class="pop" style="--d:1.5s"><div class="big shine">Get directions <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg></div></div></div><nav class="tb"><span class=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><em>Home</em></span><span class=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><em>Book</em></span><span class="on"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg><em>Rewards</em></span><span class=""><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/></svg><em>Profile</em></span></nav></div></div>
 </div>
-<div class="feat"><div data-r style="--d:0s"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></i><b>Online booking</b><p>Customers book 24/7 — fewer missed calls, fuller calendar.</p></div><div data-r style="--d:0.08s"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></i><b>Push offers</b><p>Send deals and reminders straight to their phones.</p></div><div data-r style="--d:0.16s"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg></i><b>Loyalty rewards</b><p>Digital stamp cards that bring customers back.</p></div><div data-r style="--d:0.24s"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></i><b>One-tap contact</b><p>Call, get directions or message in a single tap.</p></div></div>
 
-<section class="sx"><div class="split">
-  <div class="pic" data-tilt data-r="left"><img src="photo.jpg" alt="New Smile Dental" loading="lazy">
-    <div class="nt a"><i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></i><span><b>New booking</b><small>Tomorrow · 10:30 AM</small></span></div><div class="nt b"><i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg></i><span><b>Reward unlocked</b><small>1 visit to your free treat</small></span></div><div class="nt c"><i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i><span><b>New 5-star review</b><small>“Absolutely loved it.”</small></span></div>
-  </div>
-  <div data-r="right"><span class="k">Built for New Smile Dental</span><h2>Gentle care for healthy, confident smiles.</h2>
-    <p class="sub">Everything your customers need — in one beautiful app with your name on it.</p>
-    <ul class="ticks"><li><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></i><div><b>Online booking</b><span>Customers book 24/7 — fewer missed calls, fuller calendar.</span></div></li><li><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></i><div><b>Push offers</b><span>Send deals and reminders straight to their phones.</span></div></li><li><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg></i><div><b>Loyalty rewards</b><span>Digital stamp cards that bring customers back.</span></div></li><li><i><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></i><div><b>One-tap contact</b><span>Call, get directions or message in a single tap.</span></div></li></ul>
-  </div>
+<section class="gsec"><div class="gw split">
+  <div><span class="gk" data-r>Built for New Smile Dental</span><h2 class="gh" data-r>What your customers <em>can do</em></h2><p class="gp" data-r>Everything they need from you, in one app with your name on it.</p>
+    <div style="margin-top:28px;height:clamp(220px,26vw,320px)" data-r><div style="height:100%" data-shutter="7"><span class="tagpill">Dentist · Los Angeles</span><img src="photo.jpg" alt="New Smile Dental" loading="lazy"></div></div></div>
+  <div class="gl fo"><div class="lens" aria-hidden="true"></div><div class="fr"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></i><div><b>Online booking</b><small>Customers book 24/7 — fewer missed calls, fuller calendar.</small></div><em>Most used</em></div><div class="fr"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></i><div><b>Push offers</b><small>Send deals and reminders straight to their phones.</small></div><span></span></div><div class="fr"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg></i><div><b>Loyalty rewards</b><small>Digital stamp cards that bring customers back.</small></div><span></span></div><div class="fr"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></i><div><b>One-tap contact</b><small>Call, get directions or message in a single tap.</small></div><span></span></div></div>
 </div></section>
-<div class="strip" aria-hidden="true"><div class="rail"><figure><img src="../_assets/stock/photo-1598256989800-fe5f95da9787.jpg" alt="" loading="lazy"><figcaption>Check-ups &amp; Cleaning</figcaption></figure><figure><img src="../_assets/stock/photo-1606811971618-4486d14f3f99.jpg" alt="" loading="lazy"><figcaption>Teeth Whitening</figcaption></figure><figure><img src="../_assets/stock/photo-1629909613654-28e377c37b09.jpg" alt="" loading="lazy"><figcaption>Implants</figcaption></figure><figure><img src="../_assets/stock/photo-1606811841689-23dfddce3e95.jpg" alt="" loading="lazy"><figcaption>Invisalign</figcaption></figure><figure><img src="../_assets/stock/photo-1677026010083-78ec7f1b84ed.jpg" alt="" loading="lazy"><figcaption>Emergency Dental</figcaption></figure><figure><img src="../_assets/stock/photo-1588776814546-daab30f310ce.jpg" alt="" loading="lazy"><figcaption>Kids Dentistry</figcaption></figure><figure><img src="../_assets/stock/photo-1598256989800-fe5f95da9787.jpg" alt="" loading="lazy"><figcaption>Check-ups &amp; Cleaning</figcaption></figure><figure><img src="../_assets/stock/photo-1606811971618-4486d14f3f99.jpg" alt="" loading="lazy"><figcaption>Teeth Whitening</figcaption></figure><figure><img src="../_assets/stock/photo-1629909613654-28e377c37b09.jpg" alt="" loading="lazy"><figcaption>Implants</figcaption></figure><figure><img src="../_assets/stock/photo-1606811841689-23dfddce3e95.jpg" alt="" loading="lazy"><figcaption>Invisalign</figcaption></figure><figure><img src="../_assets/stock/photo-1677026010083-78ec7f1b84ed.jpg" alt="" loading="lazy"><figcaption>Emergency Dental</figcaption></figure><figure><img src="../_assets/stock/photo-1588776814546-daab30f310ce.jpg" alt="" loading="lazy"><figcaption>Kids Dentistry</figcaption></figure></div></div>
-<section class="sx"><span class="k" data-r>What's included</span><h2 data-r>A complete app, ready to launch</h2>
-  <div class="inc"><div data-r style="--d:0s"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></i><b>iOS & Android</b><p>Native-feel apps published under your name.</p></div><div data-r style="--d:0.1s"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/><path d="M19 3v4M17 5h4"/></svg></i><b>Your branding</b><p>Colours, logo and photos of New Smile Dental.</p></div><div data-r style="--d:0.2s"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></i><b>Owner dashboard</b><p>See requests, bookings and customers in one place.</p></div><div data-r style="--d:0s"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></i><b>Push notifications</b><p>Reach every customer instantly, for free.</p></div><div data-r style="--d:0.1s"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></i><b>Secure & fast</b><p>Hosted, maintained and kept up to date.</p></div><div data-r style="--d:0.2s"><i><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></i><b>Launch support</b><p>We set it up and help you get your first users.</p></div></div>
-</section>
-<section class="pb"><div data-r><div><h2>Ready to put New Smile Dental on every phone?</h2><p>Fully designed, built and published to the App Store and Google Play.</p></div><div class="px"><small>One-time</small><b>$1,500</b><small>iOS + Android</small></div></div></section>
+<section class="gsec" style="padding-top:0"><div class="gw"><div style="text-align:center"><span class="gk" data-r>How it works</span><h2 class="gh" data-r>From first tap to <em>repeat customer</em></h2></div><div class="flow" style="--n:4"><svg aria-hidden="true"><defs><linearGradient id="fg" x1="0" x2="1"><stop offset="0" stop-color="var(--g-a2)"/><stop offset="1" stop-color="var(--g-a)"/></linearGradient></defs></svg>
+    <div class="gl fn"><div class="d">1</div><h3>Customer opens the app</h3><p>Your name and logo on their home screen.</p></div><div class="gl fn"><div class="d">2</div><h3>They book or order</h3><p>Any time, in a couple of taps.</p></div><div class="gl fn"><div class="d">3</div><h3>You get notified</h3><p>Everything lands in one dashboard.</p></div><div class="gl fn"><div class="d">4</div><h3>They come back</h3><p>Rewards and reminders do the work.</p></div></div></div></section>
+<section class="gsec"><div class="gw"><div style="text-align:center;max-width:720px;margin:0 auto"><span class="gk" data-r>What's included</span><h2 class="gh" data-r>A complete app, <em>ready to launch</em></h2><p class="gp" data-r style="margin:0 auto">Designed, built and published for you. Tap a card to bring it forward.</p></div>
+  <div class="stk"><div class="ghost" aria-hidden="true"></div><article class="gl sc"><span class="n">01</span><i><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></i><h3>iPhone and Android</h3><p>Published under your own name on both stores.</p></article><article class="gl sc"><span class="n">02</span><i><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/><path d="M19 3v4M17 5h4"/></svg></i><h3>Your branding</h3><p>Your colours, logo and photos of New Smile Dental.</p></article><article class="gl sc"><span class="n">03</span><i><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></i><h3>Owner dashboard</h3><p>Requests, bookings and customers in one place.</p></article></div></div></section>
+<section class="gsec" style="padding-top:0"><div class="gw" style="text-align:center"><span class="gk" data-r>Inside the app</span><div style="margin-top:26px"><div class="gl dock"><div class="dk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg><span>Check-ups &amp; Cleaning</span></div><div class="dk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M10 2h4"/></svg><span>Teeth Whitening</span></div><div class="dk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.5 13 17 22l-5-3-5 3 1.5-9"/></svg><span>Implants</span></div><div class="dk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Invisalign</span></div><div class="dk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3C14.7 3 13.5 3.5 12 5c-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"/></svg><span>Emergency Dental</span></div><div class="dk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/><path d="M19 3v4M17 5h4"/></svg><span>Kids Dentistry</span></div></div></div></div></section>
+<section class="gsec" style="padding-top:0"><div class="gw"><div class="gl band" data-gt><span class="big" aria-hidden="true"><svg width="300" height="300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5.5c-1.5-1.5-3.5-2.5-5.5-1.8C3.6 4.7 3.5 8 4.3 10.6c.6 2 .9 4.1 1.2 6.2.3 2 .8 4.2 2 4.2 1.5 0 1.6-3 2.2-5 .3-1 1.2-1.3 2.3-1.3s2 .3 2.3 1.3c.6 2 .7 5 2.2 5 1.2 0 1.7-2.2 2-4.2.3-2.1.6-4.2 1.2-6.2.8-2.6.7-5.9-2.2-6.9-2-.7-4 .3-5.5 1.8z"/></svg></span>
+  <div><h2>Ready to put New Smile Dental on every phone?</h2><p class="gp">Fully designed, built and published to the App Store and Google Play. Any changes you want are included.</p></div>
+  <div class="gpx"><b>$1,500</b><small>one-time<br>iPhone + Android</small></div></div></div></section>
+<footer class="gft"><div class="gw in"><span class="wm">New Smile Dental</span><span>Mobile app concept (demo) · © 2026</span></div></footer>
 <div class="toast" id="toast"></div><div class="sprog" aria-hidden="true"></div><div class="cur" aria-hidden="true"></div><div class="cur-r" aria-hidden="true"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
@@ -318,88 +479,76 @@ document.querySelectorAll('[data-pick]').forEach(g=>g.addEventListener('click',e
 })();
 </script>
 <script>
-document.querySelectorAll('[data-tilt]').forEach(c=>{if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-c.addEventListener('pointermove',e=>{const b=c.getBoundingClientRect(),x=(e.clientX-b.left)/b.width,y=(e.clientY-b.top)/b.height;
-c.style.transform='perspective(1000px) rotateY('+((x-.5)*14).toFixed(2)+'deg) rotateX('+((.5-y)*12).toFixed(2)+'deg)';c.style.setProperty('--gx',(x*100)+'%');c.style.setProperty('--gy',(y*100)+'%')});
-c.addEventListener('pointerleave',()=>c.style.transform='')});
-</script>
-<script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-const host = document.querySelector("body");
-if (host) {
-  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const small = innerWidth < 760;
-  const cv = document.createElement('canvas'); cv.className = 'fx3d fixed';
-  cv.style.setProperty('--fxblend', "normal");
-  host.prepend(cv);
-  const accent = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#888');
-  const r = new THREE.WebGLRenderer({ canvas: cv, alpha: true, antialias: !small });
-  r.setPixelRatio(Math.min(devicePixelRatio, small ? 1.25 : 1.75));
-  const scene = new THREE.Scene();
-  const cam = new THREE.PerspectiveCamera(55, 1, 0.1, 100); cam.position.set(0, 0, 6);
-  const D = 0.7 * (small ? 0.5 : 1);
-  const group = new THREE.Group(); scene.add(group);
-  const side = 1; // 1 = right of the hero text, -1 = left, 0 = centred behind it
-  let update = () => {};
-  const effect = "waves";
+(()=>{
+const calm=matchMedia('(prefers-reduced-motion:reduce)').matches,fine=matchMedia('(hover:hover) and (pointer:fine)').matches,wide=()=>innerWidth>900;
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+// Start an effect when its element scrolls into view. Two triggers (observer and a plain scroll check), so a section can never stay hidden.
+const waiting=[];
+const seen=(el,fn,th=.22)=>{const w={el,done:false,run(){if(w.done)return;w.done=true;io.disconnect();fn()}};const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)w.run()}),{threshold:th});io.observe(el);waiting.push(w)};
+const sweep=()=>{for(const w of waiting){if(w.done)continue;const b=w.el.getBoundingClientRect();if(b.top<innerHeight*.9&&b.bottom>0)w.run();else if(b.bottom<=0)w.run()}};
+addEventListener('scroll',sweep,{passive:true});addEventListener('resize',sweep);addEventListener('load',()=>setTimeout(sweep,500));
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+// A real spring (stiffness k, damping c), not an easing curve.
+function spring(from,to,k,c,tick,done){let x=from,v=0,last=performance.now();(function step(now){const dt=Math.min(.032,(now-last)/1000);last=now;v+=(-k*(x-to)-c*v)*dt;x+=v*dt;tick(x);if(Math.abs(v)>.02||Math.abs(x-to)>.02)requestAnimationFrame(step);else{tick(to);done&&done()}})(last)}
+function tween(ms,tick,done){const t0=performance.now();(function f(now){const p=Math.min(1,(now-t0)/ms);tick(ease(p));p<1?requestAnimationFrame(f):done&&done()})(t0)}
 
-  if (effect === 'particles') {
-    const n = Math.round(2600 * D), pos = new Float32Array(n * 3);
-    for (let i = 0; i < n; i++) { const rr = 2.2 + Math.random() * 2.6, t = Math.random() * 6.283, p = Math.acos(2 * Math.random() - 1);
-      pos.set([rr * Math.sin(p) * Math.cos(t), rr * Math.sin(p) * Math.sin(t), rr * Math.cos(p)], i * 3); }
-    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    group.add(new THREE.Points(g, new THREE.PointsMaterial({ color: accent, size: 0.05, transparent: true, opacity: 0.95 })));
-    group.position.x = 2.2 * side;
-    update = (t) => { group.rotation.y = t * 0.06; group.rotation.x = Math.sin(t * 0.2) * 0.15; };
-  }
-  if (effect === 'waves') {
-    const seg = Math.round(90 * Math.sqrt(D)), g = new THREE.PlaneGeometry(16, 10, seg, seg);
-    const pts = new THREE.Points(g, new THREE.PointsMaterial({ color: accent, size: 0.055, transparent: true, opacity: 0.9 }));
-    pts.rotation.x = -1.05; pts.position.y = -1.6; group.add(pts);
-    const base = g.attributes.position.array.slice();
-    update = (t) => { const a = g.attributes.position.array;
-      for (let i = 0; i < a.length; i += 3) { const x = base[i], y = base[i + 1]; a[i + 2] = Math.sin(x * 0.7 + t * 0.9) * 0.35 + Math.cos(y * 0.9 + t * 0.6) * 0.3; }
-      g.attributes.position.needsUpdate = true; };
-  }
-  if (effect === 'blob') {
-    const g = new THREE.IcosahedronGeometry(1.9, small ? 4 : 6), base = g.attributes.position.array.slice();
-    const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ color: accent, wireframe: true, transparent: true, opacity: 0.7 }));
-    group.add(m); group.position.set(2.4 * side, 0.2, 0);
-    const v = new THREE.Vector3();
-    update = (t) => { const a = g.attributes.position.array;
-      for (let i = 0; i < a.length; i += 3) { v.set(base[i], base[i + 1], base[i + 2]).normalize();
-        const k = 1.9 + 0.22 * Math.sin(v.x * 3 + t) * Math.cos(v.y * 3 + t * 0.8) + 0.12 * Math.sin(v.z * 5 + t * 1.3);
-        a[i] = v.x * k; a[i + 1] = v.y * k; a[i + 2] = v.z * k; }
-      g.attributes.position.needsUpdate = true; m.rotation.y = t * 0.15; m.rotation.x = t * 0.07; };
-  }
-  if (effect === 'rings') {
-    for (let i = 0; i < 4; i++) {
-      const m = new THREE.Mesh(new THREE.TorusGeometry(1.2 + i * 0.45, 0.012 + i * 0.004, 8, 160), new THREE.MeshBasicMaterial({ color: accent, transparent: true, opacity: 0.7 - i * 0.12 }));
-      m.rotation.set(Math.random() * 3, Math.random() * 3, 0); group.add(m);
-    }
-    group.position.set(2.4 * side, 0, 0);
-    update = (t) => group.children.forEach((m, i) => { m.rotation.x += 0.002 + i * 0.0008; m.rotation.y += 0.003 - i * 0.0005; });
-  }
-  if (effect === 'grid') {
-    const g = new THREE.GridHelper(40, Math.round(60 * Math.sqrt(D)), accent, accent);
-    g.material.transparent = true; g.material.opacity = 0.7; g.position.y = -2; group.add(g);
-    cam.position.set(0, 0.4, 6); cam.lookAt(0, -0.6, -4);
-    update = (t) => { g.position.z = (t * 1.2) % (40 / Math.round(60 * Math.sqrt(D))); };
-  }
+// staggered spring-in for groups
+$$('[data-in]').forEach(g=>{[...g.children].forEach((c,i)=>c.style.setProperty('--k',i));seen(g,()=>g.classList.add('go'),.15)});
 
-  let mx = 0, my = 0;
-  addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; }, { passive: true });
-  const size = () => { const w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return; r.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
-  new ResizeObserver(size).observe(cv); size();
-  let on = true; new IntersectionObserver((e) => { on = e[0].isIntersecting; }).observe(document.body);
-  const t0 = performance.now();
-  const frame = () => {
-    const t = (performance.now() - t0) / 1000;
-    if (on) { update(t); scene.rotation.y += (mx * 0.25 - scene.rotation.y) * 0.04; scene.rotation.x += (my * 0.15 - scene.rotation.x) * 0.04; r.render(scene, cam); }
-    if (!calm) requestAnimationFrame(frame);
-  };
-  frame();
-}
+// 09 masked type
+$$('.mk').forEach(m=>{const h=m.closest('h1,h2');const run=()=>{h&&h.classList.add('go');if(calm){m.style.setProperty('--e','0%');return}
+  m.style.setProperty('--lo',1);tween(1350,p=>m.style.setProperty('--e',(100-p*100)+'%'),()=>tween(500,p=>m.style.setProperty('--lo',1-p)))};seen(m,()=>setTimeout(run,250),.4)});
+
+// 12 image reveal: slats narrow toward their own centre, one beat apart
+$$('[data-shutter]').forEach(b=>{const n=+b.dataset.shutter||7;for(let i=0;i<n;i++){const s=document.createElement('i');s.className='slat';s.style.left=(i*100/n)+'%';s.style.width=(100/n+.4)+'%';s.style.transitionDelay=(i*85)+'ms';b.appendChild(s)}seen(b,()=>b.classList.add('open'),.3)});
+
+// 07 spring stack: each card has its own damping; the top one overshoots
+$$('.stk').forEach(st=>{const cards=$$('.sc',st),n=cards.length;if(!n)return;let front=n-1;
+  const rest=i=>{const o=i-(n-1)/2,sp=Math.min(286,(st.clientWidth-340)/(n-1));return{r:o*5.5,x:o*sp,y:Math.abs(o)*14}};
+  const place=(el,r,x,y,z,s)=>el.style.transform='translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,'+z+'px) rotate('+r.toFixed(2)+'deg) scale('+s+')';
+  cards.forEach((el,i)=>{el._p=0;place(el,(i-(n-1)/2)*1.5,0,0,i,1);el.style.zIndex=i});
+  const fan=()=>{if(!wide())return;st.classList.add('go');cards.forEach((el,i)=>{const t=rest(i),top=i===front;setTimeout(()=>spring(el._p,1,top?120:90,top?9:i===0?22:15,p=>{el._p=p;place(el,t.r*p,t.x*p,t.y*p,top?40:i,top?1.03:1)}),(n-1-i)*55)})};
+  seen(st,fan,.35);
+  cards.forEach((el,i)=>el.addEventListener('click',()=>{if(!wide()||i===front)return;front=i;cards.forEach((c,j)=>{c.style.zIndex=j===i?n+1:j;const t=rest(j);spring(.82,1,130,j===i?8:18,p=>place(c,t.r*p,t.x*p,t.y*p,j===i?40:j,j===i?1.03:1))})}));
+});
+
+// 13 perspective shift: separate back to front, then breathe
+$$('.lyw').forEach(w=>{const s=w.querySelector('.lys');if(!s)return;let on=false;
+  seen(w,()=>{w.classList.add('go');if(calm||!wide()){s.style.setProperty('--sx','14px');s.style.setProperty('--sy','-12px');return}
+    tween(1500,p=>{s.style.setProperty('--sx',(46*p)+'px');s.style.setProperty('--sy',(-20*p)+'px');s.style.setProperty('--sz',(70*p)+'px');s.style.setProperty('--ry',(-19*p)+'deg');s.style.setProperty('--rx',(5*p)+'deg')},()=>{on=true})},.3);
+  let mx=0,my=0;if(fine)w.addEventListener('mousemove',e=>{const b=w.getBoundingClientRect();mx=(e.clientX-b.left)/b.width-.5;my=(e.clientY-b.top)/b.height-.5});
+  if(!calm)(function loop(t){if(on){const br=Math.sin(t/1700);s.style.setProperty('--ry',(-19+mx*10+br*1.6)+'deg');s.style.setProperty('--rx',(5-my*8+br*.8)+'deg')}requestAnimationFrame(loop)})(0)});
+
+// 14 glass focus: the lens steps down the rows; a hovered or tapped row takes it
+$$('.fo').forEach(f=>{const rows=$$('.fr',f),lens=f.querySelector('.lens');if(!rows.length||!lens)return;let cur=-1,y=0,h=0,hold=0,dir=1;
+  const to=i=>{if(i===cur)return;const r=rows[i],ty=r.offsetTop,th=r.offsetHeight;rows.forEach((x,j)=>x.classList.toggle('on',j===i));
+    if(cur<0||calm){y=ty;h=th;lens.style.top=y+'px';lens.style.height=h+'px'}else{const y0=y,h0=h;spring(0,1,170,19,p=>{y=y0+(ty-y0)*p;h=h0+(th-h0)*p;lens.style.top=y+'px';lens.style.height=h+'px'})}cur=i};
+  seen(f,()=>{to(0);if(calm)return;setInterval(()=>{if(Date.now()<hold)return;if(cur+dir>=rows.length||cur+dir<0)dir=-dir;to(cur+dir)},2300)},.3);
+  rows.forEach((r,i)=>{const go=()=>{hold=Date.now()+6000;to(i)};r.addEventListener('mouseenter',go);r.addEventListener('click',go)});
+  addEventListener('resize',()=>{if(cur>=0){const r=rows[cur];y=r.offsetTop;h=r.offsetHeight;lens.style.top=y+'px';lens.style.height=h+'px'}})});
+
+// 15 flowing paths: the pulse draws the line, and each node answers when it arrives
+$$('.flow').forEach(fl=>{const nodes=$$('.fn',fl),svg=fl.querySelector('svg');if(nodes.length<2||!svg)return;let paths=[];
+  const build=()=>{const b=fl.getBoundingClientRect(),vert=!wide();svg.setAttribute('viewBox','0 0 '+b.width+' '+b.height);
+    const mk=(c,d)=>{const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('class',c);p.setAttribute('d',d);svg.appendChild(p);return p};
+    $$('path,circle',svg).forEach(p=>p.remove());paths=[];
+    for(let i=0;i<nodes.length-1;i++){const a=nodes[i].querySelector('.d').getBoundingClientRect(),c=nodes[i+1].querySelector('.d').getBoundingClientRect();
+      const x1=a.left+a.width/2-b.left,y1=a.top+a.height/2-b.top,x2=c.left+c.width/2-b.left,y2=c.top+c.height/2-b.top;
+      const d=vert?'M'+x1+' '+y1+' C'+(x1-34)+' '+(y1+(y2-y1)*.5)+' '+(x2-34)+' '+(y1+(y2-y1)*.5)+' '+x2+' '+y2:'M'+x1+' '+y1+' C'+(x1+(x2-x1)*.5)+' '+(y1-46)+' '+(x1+(x2-x1)*.5)+' '+(y2-46)+' '+x2+' '+y2;
+      mk('base',d);const lit=mk('lit',d),len=lit.getTotalLength();lit.style.strokeDasharray=len;lit.style.strokeDashoffset=len;
+      const dot=document.createElementNS('http://www.w3.org/2000/svg','circle');dot.setAttribute('r',5);dot.setAttribute('fill','var(--g-a)');dot.style.filter='drop-shadow(0 0 8px var(--g-a))';dot.style.opacity=0;svg.appendChild(dot);
+      paths.push({lit,len,dot})}};
+  const ping=n=>{n.classList.add('lit');n.classList.remove('ping');void n.offsetWidth;n.classList.add('ping')};
+  const wave=(first)=>{ping(nodes[0]);paths.forEach((p,i)=>setTimeout(()=>{p.dot.style.opacity=1;tween(950,t=>{const pt=p.lit.getPointAtLength(p.len*t);p.dot.setAttribute('cx',pt.x);p.dot.setAttribute('cy',pt.y);if(first)p.lit.style.strokeDashoffset=p.len*(1-t)},()=>{p.dot.style.opacity=0;ping(nodes[i+1])})},250+i*1050))};
+  seen(fl,()=>{build();if(calm){nodes.forEach(n=>n.classList.add('lit'));paths.forEach(p=>p.lit.style.strokeDashoffset=0);return}wave(true);setInterval(()=>wave(false),Math.max(5200,paths.length*1050+2600))},.35);
+  let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{const lit=nodes[0].classList.contains('lit');build();if(lit)paths.forEach(p=>p.lit.style.strokeDashoffset=0)},200)})});
+
+// 08 magnetic dock
+if(fine&&!calm)$$('.dock').forEach(d=>{const items=$$('.dk',d);d.addEventListener('mousemove',e=>items.forEach(it=>{const b=it.getBoundingClientRect(),dx=Math.abs(e.clientX-(b.left+b.width/2)),s=1+.62*Math.exp(-(dx*dx)/(2*74*74));it.style.transform='scale('+s.toFixed(3)+')'}));d.addEventListener('mouseleave',()=>items.forEach(it=>it.style.transform=''))});
+
+// glass tilt with a specular highlight that follows the pointer
+if(fine&&!calm)$$('[data-gt]').forEach(c=>{c.addEventListener('mousemove',e=>{const b=c.getBoundingClientRect(),x=(e.clientX-b.left)/b.width,y=(e.clientY-b.top)/b.height;c.style.transform='perspective(1100px) rotateY('+((x-.5)*9).toFixed(2)+'deg) rotateX('+((.5-y)*7).toFixed(2)+'deg)';c.style.setProperty('--gx',(x*100)+'%');c.style.setProperty('--gy',(y*100)+'%')});c.addEventListener('mouseleave',()=>{c.style.transform='';c.style.removeProperty('--gx');c.style.removeProperty('--gy')})});
+})();
 </script>
 <script>
 document.querySelectorAll('.phone').forEach(p=>{p.addEventListener('mousemove',e=>{const r=p.getBoundingClientRect(),dx=(e.clientX-r.left)/r.width-.5,dy=(e.clientY-r.top)/r.height-.5;p.style.transform='rotateY('+(dx*10).toFixed(2)+'deg) rotateX('+(-dy*8).toFixed(2)+'deg)'});p.addEventListener('mouseleave',()=>p.style.transform='')});
